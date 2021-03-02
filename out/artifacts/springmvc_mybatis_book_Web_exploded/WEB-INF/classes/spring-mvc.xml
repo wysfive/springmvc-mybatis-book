@@ -38,5 +38,10 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!-- 使用aop注解
+
+     -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
 
 </beans>

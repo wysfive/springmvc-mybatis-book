@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface AyUserDao {
     List<AyUser> findAll();
+
+    AyUser findById(String id);
 }
