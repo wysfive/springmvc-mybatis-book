@@ -13,4 +13,9 @@
         <include refid="userField"></include>
         from ay_user a
     </select>
+
+    <select id="findById" parameterType="String" resultType="com.ay.model.AyUser">
+        select * from ay_user
+        where id = #{id}
+    </select>
 </mapper>

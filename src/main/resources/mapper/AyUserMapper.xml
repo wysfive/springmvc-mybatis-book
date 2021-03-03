@@ -3,14 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ay.dao.AyUserDao">
     <sql id="userField">
-        a.id as "id",
-        a.name as "name",
-        a.password as "password"
+        /*使用$而不是#*/
+        ${prefix}.id as "id",
+        ${prefix}.name as "name",
+        ${prefix}.password as "password"
     </sql>
+    <resultMap id="userMap" type="com.ay.model.AyUser">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+
+
+    </resultMap>
+
     <!-- 获取所有的用户 -->
-    <select id="findAll" resultType="com.ay.model.AyUser">
+    <select id="findAll" resultMap="userMap">
         select
-        <include refid="userField"></include>
+        <include refid="userField">
+            <property name="prefix" value="a"/>
+        </include>
         from ay_user a
     </select>
 
@@ -18,4 +29,51 @@
         select * from ay_user
         where id = #{id}
     </select>
+
+    <!-- 实例1:通过名称查询用户 -->
+    <select id="findByName" parameterType="String" resultType="com.ay.model.AyUser">
+        select * from ay_user
+        where name = #{name}
+    </select>
+
+    <!-- 实例2:通过名称查询用户个数 -->
+    <select id="countByName" parameterType="String" resultType="java.lang.Integer" >
+        select count(*) from ay_user
+        where name = #{name}
+    </select>
+
+    <!--
+        实例2:插入用户数据,主键自增
+        useGeneratedKeys="true" 使用数据库内部规则生成id
+        keyProperty 表示哪一列是主键
+        statementType="PREPARED" 说明是prestatement的生成语句
+    -->
+    <!--<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ay.model.AyUser">
+        insert into ay_user(name, password) value (#{name}, #{password})
+    </insert>-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ay.model.AyUser">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE" >
+            select MAX(id)+1 as id from ay_user
+        </selectKey>
+        insert into ay_user(id, name, password) value (#{id}, #{name}, #{password})
+    </insert>
+
+    <update id="update" parameterType="com.ay.model.AyUser">
+        update ay_user SET
+        name = #{name},
+        password = #{password}
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete form ay_user
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteByName" parameterType="String">
+        delete from ay_user
+        where name = #{name}
+    </delete>
+
+
 </mapper>
