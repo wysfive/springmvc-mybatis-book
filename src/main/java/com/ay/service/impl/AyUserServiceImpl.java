@@ -6,7 +6,9 @@ import com.ay.service.AyUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AyUserServiceImpl implements AyUserService {
@@ -17,5 +19,12 @@ public class AyUserServiceImpl implements AyUserService {
     @Override
     public List<AyUser> findAll() {
         return ayUserDao.findAll();
+    }
+
+    public List<AyUser> findByNameAndPassword(Map<String, String> map){
+        Map<String, String> map1 = new HashMap<>();
+        map1.put("name", "a1");
+        map1.put("password", "123");
+        return ayUserDao.findByNameAndPassword(map1);
     }
 }
