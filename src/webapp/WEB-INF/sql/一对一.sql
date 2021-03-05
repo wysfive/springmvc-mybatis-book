@@ -4,7 +4,7 @@ create table ay_user (
 	name varchar(10) default null,
 	password varchar(64) default null,
 	age int(10) default null,
-	adderss_id bigint(32) default null,
+	address_id bigint(32) default null,
 	PRIMARY key (id),
 	KEY FK_address_id (address_id),
 	CONSTRAINT FK_address_id foreign key (address_id)

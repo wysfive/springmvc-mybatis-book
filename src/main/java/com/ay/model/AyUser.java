@@ -1,6 +1,7 @@
 package com.ay.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 用户实体
@@ -12,6 +13,17 @@ public class AyUser implements Serializable {
     private Integer age;
     // 用户和地址一一对应，及一个用户就只有一个地址
     private AyUserAddress ayUserAddress;
+
+    public List<AyRole> getAyRoleList() {
+        return ayRoleList;
+    }
+
+    public void setAyRoleList(List<AyRole> ayRoleList) {
+        this.ayRoleList = ayRoleList;
+    }
+
+    // 用户和角色是多对多关系, 一个用户可以有多个角色
+    private List<AyRole> ayRoleList;
 
     public Integer getId() {
         return id;

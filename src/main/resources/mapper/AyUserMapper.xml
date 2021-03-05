@@ -12,6 +12,14 @@
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="password" column="password"/>
+        <association property="ayUserAddress" column="address_id"
+                     select="com.ay.dao.AyUserAddressDao.findById" javaType="com.ay.model.AyUserAddress">
+        </association>
+        <collection property="ayRoleList" javaType="ArrayList" column="id" ofType="com.ay.model.AyRole"
+                    fetchType="lazy" select="com.ay.dao.AyRoleDao.findById">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+        </collection>
     </resultMap>
 
     <!-- 通过用户名或密码查询用户 -->
@@ -97,7 +105,7 @@
         from ay_user a
     </select>
 
-    <select id="findById" parameterType="String" resultType="com.ay.model.AyUser">
+    <select id="findById" parameterType="String" resultMap="userMap">
         select * from ay_user
         where id = #{id}
     </select>
@@ -142,12 +150,11 @@
         where 1=1 and name = #{name} and password = #{password}
     </select>
 
-
     <!--
         实例2:插入用户数据,主键自增
         useGeneratedKeys="true" 使用数据库内部规则生成id
         keyProperty 表示哪一列是主键
-        statementType="PREPARED" 说明是prestatement的生成语句
+        statementType="PREPARED" 说明是pre statement的生成语句
     -->
     <!--<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ay.model.AyUser">
         insert into ay_user(name, password) value (#{name}, #{password})
@@ -201,5 +208,10 @@
         where name = #{name}
     </delete>
 
+    <select id="findByRoleId" parameterType="Integer" resultType="com.ay.model.AyUser">
+        select * from ay_user where id in (
+            select user_id from ay_user_role_rel where role_id = #{roleId}
+            )
+    </select>
 
 </mapper>

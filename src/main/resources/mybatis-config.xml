@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 全局配置参数, 需要时再配置 -->
+    <settings>
+        <!-- 省略代码 -->
+        <!-- 通过日志记录显示mybatis的执行过程 -->
+        <setting name="logImpl" value="log4j"/>
+        <!-- lazyLoadingEnable设置为懒加载 -->
+        <setting name="lazyLoadingEnable" value="true"/>
+        <!-- aggressiveLazyLoading主动加载为false -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+</configuration>

@@ -2,12 +2,11 @@ package com.ay.dao;
 
 import com.ay.model.AyUser;
 import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
-@Repository
+
 public interface AyUserDao {
     // 实例1: 查询所有的用户列表
     @Select("select * from ay_user")
@@ -59,4 +58,6 @@ public interface AyUserDao {
 
     // 顺序映射
     List<AyUser> findByNameAndPassword2(String name, String password);
+
+    List<AyUser> findByRoleId(String id);
 }
