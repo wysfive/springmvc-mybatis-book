@@ -16,15 +16,26 @@ public class AyUserServiceImpl implements AyUserService {
     @Resource
     private AyUserDao ayUserDao;
 
-    @Override
+    /*@Override
     public List<AyUser> findAll() {
         return ayUserDao.findAll();
-    }
+    }*/
 
     public List<AyUser> findByNameAndPassword(Map<String, String> map){
         Map<String, String> map1 = new HashMap<>();
         map1.put("name", "a1");
         map1.put("password", "123");
         return ayUserDao.findByNameAndPassword(map1);
+    }
+
+    @Override
+    public List<AyUser> findAll() {
+        return null;
+    }
+
+    @Override
+    public AyUser findById(String id) {
+
+        return ayUserDao.findById(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.ay.test;
+package com.ay.test.jdkProxy;
 
 /**
  * 客户端类
