@@ -6,6 +6,7 @@ import com.sun.tracing.dtrace.ModuleAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -53,6 +54,7 @@ public class AyUserController {
         model.addAttribute("message", "hello world");
         return "hello";
     }
+
 
     // 3.ModelAttribute有方法参数
     @ModelAttribute("ayUser")
@@ -165,12 +167,35 @@ public class AyUserController {
                 "Get requestHeader accept is "+ Arrays.toString(accept);
     }
 
-    // 获取cookie上的痣
+    // 获取cookie上的值
     @RequestMapping("/cookieValue")
     @ResponseBody
     public String cookieValue(@CookieValue("JSESSIONID") String cookie){
         return "Get cookie param is "+cookie;
     }
 
-    //
+    /*@RequestMapping("redirect")
+    public String redirectTest(Model model, SessionStatus sessionStatus){
+        AyUser ayUser = new AyUser();
+        ayUser.setName("wysfive");
+        model.addAttribute("ayUser", ayUser);
+        // 删除HttpSession中属性
+        sessionStatus.setComplete();
+        return "redirect:hello";
+    }*/
+
+    /*@GetMapping("hello")
+    public String hello(@SessionAttribute("ayUser") AyUser ayUser){
+        // model.addAttribute("message", "hello world");
+        System.out.println(ayUser.getName());
+        return "hello";
+    }*/
+
+    @PostMapping("requestBody")
+    @ResponseBody
+    public void requestBody(@RequestBody AyUser ayUser){
+        System.out.println(ayUser.getName());
+        System.out.println(ayUser.getPassword());
+    }
+
 }
